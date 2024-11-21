@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+.custom-shape-divider-bottom-1731520006 svg {
+  position: relative;
+  display: block;
+  width: calc(160% + 1.3px);
+  height: 285px;
+}
+
+.shape-fill2 {
+  fill: #8A3339; /* Original color */
+}
+
+.shape-fill {
+  fill: #481317 !important; /* Different color for the offset shape */
+}
+
+#itim {
+  font-family: "Itim", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.gradient-overlay {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.5) 43%,
+    rgba(255, 255, 255, 0) 61%
+  );
+}
+
+@media (max-width: 767px) { /* Adjust to your mobile breakpoint */
+  .gradient-overlay {
+    background: rgba(255, 255, 255, 0.6); /* Solid color with 60% opacity */
+  }
+}
