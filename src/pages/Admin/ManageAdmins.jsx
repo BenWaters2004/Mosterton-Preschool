@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getDatabase, ref, get, push, update, remove } from "firebase/database";
 import { database } from "../../utils/firebase"; // Import your database instance
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs"; // Import bcryptjs
 import AdminNavbar from "../../components/AdminNav";
 import AdminFooter from "../../components/AdminFooter";
 
@@ -56,15 +57,16 @@ export default function ManageAdmin() {
       newErrors.email = "Email is not valid.";
     }
 
-    if (!formData.password.trim()) {
-      newErrors.password = "Password is required.";
-    } else if (formData.password.length < 8) {
+    if (!editId && !formData.password.trim()) {
+      newErrors.password = "Password is required for new admins.";
+    } else if (formData.password && formData.password.length < 8) {
       newErrors.password = "Password must be at least 8 characters long.";
     } else if (
-      !/[A-Z]/.test(formData.password) ||
-      !/[a-z]/.test(formData.password) ||
-      !/[0-9]/.test(formData.password) ||
-      !/[!@#$%^&*]/.test(formData.password)
+      formData.password &&
+      (!/[A-Z]/.test(formData.password) ||
+        !/[a-z]/.test(formData.password) ||
+        !/[0-9]/.test(formData.password) ||
+        !/[!@#$%^&*]/.test(formData.password))
     ) {
       newErrors.password =
         "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character.";
@@ -80,12 +82,26 @@ export default function ManageAdmin() {
     if (!validateForm()) return;
 
     try {
+      let hashedPassword = formData.password;
+
+      // Hash the password only if it's provided
+      if (formData.password) {
+        const salt = await bcrypt.genSalt(10);
+        hashedPassword = await bcrypt.hash(formData.password, salt);
+      }
+
+      const adminData = {
+        name: formData.name,
+        email: formData.email,
+        ...(hashedPassword ? { password: hashedPassword } : {}),
+      };
+
       if (editId) {
         // Update existing admin
-        await update(ref(db, `admins/${editId}`), formData);
+        await update(ref(db, `admins/${editId}`), adminData);
       } else {
         // Add new admin
-        await push(ref(db, "admins"), formData);
+        await push(ref(db, "admins"), adminData);
       }
       resetForm();
       fetchAdmins(); // Refresh admin list
@@ -107,7 +123,7 @@ export default function ManageAdmin() {
   // Handle edit mode
   const handleEdit = (admin) => {
     setEditId(admin.id);
-    setFormData({ name: admin.name || "", email: admin.email, password: admin.password });
+    setFormData({ name: admin.name || "", email: admin.email, password: "" });
   };
 
   // Reset form and exit edit mode
@@ -173,7 +189,7 @@ export default function ManageAdmin() {
         {/* Admin Form */}
         <form
           onSubmit={handleSubmit}
-          className={`mt-8 p-6 rounded-lg shadow-md space-y-4 ${
+          className={`my-8 p-6 rounded-lg shadow-md space-y-4 ${
             editId ? "bg-yellow-100 border-yellow-500" : "bg-white"
           }`}
         >
@@ -212,6 +228,7 @@ export default function ManageAdmin() {
               name="password"
               value={formData.password}
               onChange={handleChange}
+              placeholder={editId ? "Leave blank to keep current password" : ""}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-secondary"
             />
             {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}

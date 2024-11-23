@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, get, child } from "firebase/database";
+import bcrypt from "bcryptjs"; // Import bcryptjs
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -19,17 +20,20 @@ export default function AdminLogin() {
 
       if (snapshot.exists()) {
         const admins = snapshot.val();
-        const admin = Object.values(admins).find(
-          (u) => u.email === email && u.password === password
-        );
+        const admin = Object.values(admins).find((u) => u.email === email);
 
         if (admin) {
-          // Store the admin's name in sessionStorage
-          sessionStorage.setItem("adminName", admin.name);
-          sessionStorage.setItem("adminEmail", admin.email); // Optionally store other data
+          // Verify the hashed password
+          const isPasswordValid = bcrypt.compareSync(password, admin.password);
+          if (isPasswordValid) {
+            sessionStorage.setItem("adminName", admin.name);
+            sessionStorage.setItem("adminEmail", admin.email);
 
-          // Successful login
-          navigate("/AdminDashboard");
+            // Successful login
+            navigate("/AdminDashboard");
+          } else {
+            setError("Invalid email or password. Please try again.");
+          }
         } else {
           setError("Invalid email or password. Please try again.");
         }
@@ -47,14 +51,12 @@ export default function AdminLogin() {
       <section className="bg-primary text-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-center">Admin Login</h2>
 
-        {/* Error Message */}
         {error && (
           <div className="bg-red-500 text-white p-3 rounded-md mb-4 text-center">
             {error}
           </div>
         )}
 
-        {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
@@ -89,7 +91,6 @@ export default function AdminLogin() {
         </form>
 
         <div className="mt-6 text-center space-y-2">
-          <br />
           <a href="/" className="text-sm hover:underline">
             Not meant to be here? Return home
           </a>

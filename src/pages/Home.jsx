@@ -5,6 +5,8 @@ import { Caterpillar, Bee, HeroImage, hut, room, garden, Pencils } from "../asse
 import { motion } from "framer-motion";
 import { slideIn, textVariant } from "../utils/motion";
 import { useInView } from "react-intersection-observer";
+import { database } from "../utils/firebase";
+import { ref, get } from "firebase/database";
 
 
 export default function Home() {
@@ -28,6 +30,60 @@ export default function Home() {
   const goToImage = (index) => {
     setCurrentIndex(index);
   };
+
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const dbRef = ref(database, "events");
+        const snapshot = await get(dbRef);
+  
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+  
+          // Convert the data from an object to an array
+          const allEvents = Object.values(data).map((event) => ({
+            ...event,
+            date: parseDate(event.date), // Parse the date for proper comparison
+          }));
+  
+          // Get the current date
+          const now = new Date();
+  
+          // Filter events to include only future events
+          const futureEvents = allEvents.filter((event) => event.date > now);
+  
+          // Sort events by date to get the closest future events
+          const sortedEvents = futureEvents.sort((a, b) => a.date - b.date);
+  
+          // Set the closest 3 future events or fewer if there are less than 3
+          setEvents(sortedEvents.slice(0, 3));
+        } else {
+          console.log("No data available");
+          setEvents([]);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+  
+    // Function to parse the date string in "dd/MM/yyyy" format
+    function parseDate(dateString) {
+      const [day, month, year] = dateString.split("/").map(Number);
+      return new Date(year, month - 1, day); // Month is 0-indexed
+    }
+  
+    fetchEvents();
+  }, []);
+  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  
 
   return (
     <div className="overflow-hidden">
@@ -152,39 +208,86 @@ export default function Home() {
       <div className="bg-primary bg-repeat bg-contain w-full h-[200px] md:h-[370px] mt-[-100px]" style={{ backgroundImage: `url(${Pencils})` }}></div>
 
       <section className="flex flex-col md:flex-row justify-between mx-[5%] my-[52px] gap-[5%]">
-        
         {/* Caterpillars Section */}
-        <div className="flex-1 relative bg-cover bg-center rounded-lg shadow-md text-center mb-6 md:mb-0 pb-12" 
-             style={{ backgroundImage: `url(${hut})` }}>
-          {/* Overlay */}
+        <div
+          className="flex-1 relative bg-cover bg-center rounded-lg shadow-md text-center mb-6 md:mb-0 pb-12"
+          style={{ backgroundImage: `url(${hut})` }}
+        >
           <div className="absolute inset-0 bg-black opacity-60 rounded-lg"></div>
           <div className="relative z-10 flex flex-col items-center">
             <img src={Caterpillar} alt="Caterpillar" className="w-auto h-[120px] my-8" />
             <h3 className="text-5xl font-bold mb-12 text-white">Caterpillars</h3>
             <p className="mb-20 text-2xl font-semibold text-white">2 - 3 Years Old</p>
-            <a href="/Caterpillars" className="bg-[#98C617] text-black px-12 py-3.5 rounded-full text-lg font-bold hover:bg-[#3FA635] hover:text-white transition duration-300">More</a>
+            <a
+              href="/Caterpillars"
+              className="bg-[#98C617] text-black px-12 py-3.5 rounded-full text-lg font-bold hover:bg-[#3FA635] hover:text-white transition duration-300"
+            >
+              More
+            </a>
           </div>
         </div>
 
         {/* Events Section */}
-        <div className="flex-1 bg-white pb-12 rounded-lg shadow-md text-center mb-6 md:mb-0">
-          <h3 className="text-2xl font-semibold bg-primary text-white w-full p-6 rounded-t-lg mb-96">Latest Events</h3>
-          <a href="/fundraisingEvents" className="bg-primary text-white px-12 py-3.5 rounded-full text-lg font-bold hover:bg-[#2E0B0E] transition">More</a>
+        <div className="flex-1 bg-white rounded-lg shadow-md pb-6 md:mb-0 mb-6">
+          <h3 className="text-2xl font-semibold bg-primary text-white w-full p-6 rounded-t-lg text-center">
+            Latest Events
+          </h3>
+          {events.length === 0 ? (
+            <p className="text-gray-500 my-6 text-center">No upcoming events to display.</p>
+          ) : (
+            <div className="p-6 space-y-6">
+              {events.map((event, index) => (
+                <div
+                  key={index}
+                  className="flex items-center border-b border-gray-200 pb-4"
+                >
+                  {/* Date Section */}
+                  <div className="bg-gray-200 rounded-full w-20 h-20 flex flex-col justify-center items-center mr-6">
+                    <p className="text-xl font-bold">{new Date(event.date).getDate()}</p>
+                    <p className="text-sm font-medium">
+                      {new Date(event.date).toLocaleString("default", { month: "short" })}
+                    </p>
+                  </div>
+
+                  {/* Event Details */}
+                  <div>
+                    <h4 className="text-lg font-semibold">{event.title}</h4>
+                    <p className="text-gray-700 text-sm">{event.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          <div className="text-center mt-4">
+            <a
+              href="/fundraisingEvents"
+              className="bg-primary text-white px-12 py-3.5 rounded-full text-lg font-bold hover:bg-[#2E0B0E] transition"
+            >
+              More
+            </a>
+          </div>
         </div>
 
         {/* Bees Section */}
-        <div className="flex-1 relative bg-cover bg-center rounded-lg shadow-md text-center pb-12" 
-             style={{ backgroundImage: `url(${room})` }}>
-          {/* Overlay */}
+        <div
+          className="flex-1 relative bg-cover bg-center rounded-lg shadow-md text-center pb-12"
+          style={{ backgroundImage: `url(${room})` }}
+        >
           <div className="absolute inset-0 bg-black opacity-60 rounded-lg"></div>
           <div className="relative z-10 flex flex-col items-center">
             <img src={Bee} alt="Bee" className="w-auto h-[120px] my-8" />
             <h3 className="text-5xl font-bold mb-12 text-white">Busy Bees</h3>
             <p className="mb-20 text-2xl font-semibold text-white">3 - 4 Years Old</p>
-            <a href="/busyBees" className="bg-[#FECF00] text-black px-12 py-3.5 rounded-full text-lg font-bold hover:bg-black hover:text-[#FECF00] transition duration-300">More</a>
+            <a
+              href="/busyBees"
+              className="bg-[#FECF00] text-black px-12 py-3.5 rounded-full text-lg font-bold hover:bg-black hover:text-[#FECF00] transition duration-300"
+            >
+              More
+            </a>
           </div>
         </div>
       </section>
+
 
       <section className="py-8 bg-primary text-white text-center rounded-xl ml-[5%] mr-[5%] mb-[52px] mt-[52px]" ref={ofstedRef}>
         <motion.div
