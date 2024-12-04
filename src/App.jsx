@@ -16,7 +16,7 @@ import AdminDash from './pages/Admin/AdminDashboard'
 import ManageAdmin from './pages/Admin/ManageAdmins'
 import AdminHelp from './pages/Admin/AdminHelp'
 import AdminEvents from './pages/Admin/AdminEvents'
-
+import AdminTerms from './pages/Admin/AdminTerms'
 
 function App() {
 
@@ -46,6 +46,7 @@ function App() {
           <Route path='/ManageAdmins' element={<ManageAdmin />} />
           <Route path='/AdminHelp' element={<AdminHelp />} />
           <Route path='/AdminEvents' element={<AdminEvents />} />
+          <Route path='/AdminTerms' element={<AdminTerms />} />
 
           <Route path='*' element={<Home />} />
         </Routes>

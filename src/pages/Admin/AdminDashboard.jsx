@@ -38,7 +38,7 @@ export default function AdminDash() {
 
         {/* Term Dates Section */}
         <div className="w-full h-[200px] bg-yellow-300 rounded-lg flex justify-center items-center relative group">
-          <a href="#" className="w-full h-full flex flex-col justify-center items-center text-white text-center p-4 group-hover:text-black transition-all duration-300">
+          <a href="/AdminTerms" className="w-full h-full flex flex-col justify-center items-center text-white text-center p-4 group-hover:text-black transition-all duration-300">
             <FontAwesomeIcon icon={faCalendar} className="text-6xl mb-4" />
             <h3 className="font-bold text-lg">Term Dates</h3>
             <p className="text-sm">Update term dates</p>
@@ -47,7 +47,7 @@ export default function AdminDash() {
 
         {/* Fundraising Events Section */}
         <div className="w-full h-[200px] bg-orange-300 rounded-lg flex justify-center items-center relative group">
-          <a href="#" className="w-full h-full flex flex-col justify-center items-center text-white text-center p-4 group-hover:text-black transition-all duration-300">
+          <a href="/AdminEvents" className="w-full h-full flex flex-col justify-center items-center text-white text-center p-4 group-hover:text-black transition-all duration-300">
             <FontAwesomeIcon icon={faGift} className="text-6xl mb-4" />
             <h3 className="font-bold text-lg">Fundraising Events</h3>
             <p className="text-sm">Update Fundraising Events</p>

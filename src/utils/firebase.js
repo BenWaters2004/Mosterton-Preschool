@@ -7,14 +7,14 @@ import { getDatabase } from "firebase/database";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "xxx",
-  authDomain: "xxx",
-  projectId: "xxx",
-  storageBucket: "xxx",
-  messagingSenderId: "xxx",
-  appId: "xxx",
-  measurementId: "xxx",
-  databaseURL: "xxx"
+  apiKey: "AIzaSyBZAJEqWrLlKpOG6HmR8nccQW9QtgHie9M",
+  authDomain: "mosterton-c6e07.firebaseapp.com",
+  projectId: "mosterton-c6e07",
+  storageBucket: "mosterton-c6e07.firebasestorage.app",
+  messagingSenderId: "1090009055763",
+  appId: "1:1090009055763:web:4241796a6bcd5e2156b5e6",
+  measurementId: "G-9M5CY455BH",
+  databaseURL: "https://mosterton-c6e07-default-rtdb.europe-west1.firebasedatabase.app",
 };
 
 // Initialize Firebase
