@@ -17,6 +17,7 @@ import ManageAdmin from './pages/Admin/ManageAdmins'
 import AdminHelp from './pages/Admin/AdminHelp'
 import AdminEvents from './pages/Admin/AdminEvents'
 import AdminTerms from './pages/Admin/AdminTerms'
+import CommitteeAdmin from './pages/Admin/AdminCommittee'
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
           <Route path='/AdminHelp' element={<AdminHelp />} />
           <Route path='/AdminEvents' element={<AdminEvents />} />
           <Route path='/AdminTerms' element={<AdminTerms />} />
+          <Route path='/AdminCommittee' element={<CommitteeAdmin />} />
 
           <Route path='*' element={<Home />} />
         </Routes>

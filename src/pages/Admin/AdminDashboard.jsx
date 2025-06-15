@@ -29,7 +29,7 @@ export default function AdminDash() {
 
         {/* Committee Members Section */}
         <div className="w-full h-[200px] bg-purple-300 rounded-lg flex justify-center items-center relative group">
-          <a href="#" className="w-full h-full flex flex-col justify-center items-center text-white text-center p-4 group-hover:text-black transition-all duration-300">
+          <a href="/AdminCommittee" className="w-full h-full flex flex-col justify-center items-center text-white text-center p-4 group-hover:text-black transition-all duration-300">
             <FontAwesomeIcon icon={faUsers} className="text-6xl mb-4" />
             <h3 className="font-bold text-lg">Committee Members</h3>
             <p className="text-sm">Manage committee members shown</p>

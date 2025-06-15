@@ -22,7 +22,7 @@ const Navbar = () => {
         </motion.div>
         <div className="flex items-center space-x-4">
           <motion.div variants={textVariant(0.3)} initial="hidden" animate={navInView ? "show" : "hidden"}>
-            <h3 className='text-[20px] hidden md:inline'>Tel: +44 (0) 1308 868578</h3>
+            <h3 className='text-[20px] hidden md:inline'>Tel: +44 (0)1308 868578</h3>
             <a href="https://www.facebook.com/mostertonpreschooldorset" target="_blank" rel="noopener noreferrer">
               <FontAwesomeIcon alt="Facebook" icon={faFacebook} className="text-primary text-[2rem] hover:text-black transition duration-300 ml-[15px]" />
             </a>

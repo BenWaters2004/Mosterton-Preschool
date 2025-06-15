@@ -8,6 +8,8 @@ import room from './room.png'
 import garden from './garden.png'
 import Pencils from './Pencils .png'
 import ApplicationToJoinPDF from './Application to join Mosterton Preschool.pdf'
+import gradenLeaves from './gradenLeaves.jpg'
+import SchoolReadiness from './readiness.jpg';
 
 export {
   logo,
@@ -20,4 +22,6 @@ export {
   garden,
   Pencils,
   ApplicationToJoinPDF,
+  gradenLeaves,
+  SchoolReadiness,
 };

@@ -30,6 +30,19 @@
   fill: #481317 !important; /* Different color for the offset shape */
 }
 
+.custom-shape-divider-bottom-1745775394 {
+  
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1745775394 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 250px;
+}
+
+
 #itim {
   font-family: "Itim", cursive;
   font-weight: 400;
@@ -49,4 +62,8 @@
   .gradient-overlay {
     background: rgba(255, 255, 255, 0.6); /* Solid color with 60% opacity */
   }
+}
+
+.heroBorder {
+  border-bottom:#8A3339 solid 28px;
 }
