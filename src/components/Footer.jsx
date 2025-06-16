@@ -83,7 +83,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="w-full bg-primary text-white text-center text-[18px] py-3">
-        <p>Copyright © 2025 Mosterton Pre-school</p>
+        <a href="https://b-waters.com" className="hover:underline px-4">Website by Ben Waters</a>Copyright © 2025 Mosterton Preschool
       </div>
     </section>
 
