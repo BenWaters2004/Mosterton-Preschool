@@ -29,7 +29,7 @@ export default function OurEnvironment() {
       {/* Committee Members Section */}
       <section className="bg-[#481317] pt-16 pb-24 relative z-30">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">Our Rooms</h2>
+          <h1 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">Our Rooms</h1>
 
           <div className="grid md:grid-cols-2 gap-10">
             {/* Caterpillars */}

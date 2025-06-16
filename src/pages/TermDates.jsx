@@ -52,9 +52,9 @@ export default function TermDates() {
         style={{ backgroundImage: `url(${HeroImage})` }}
       >
         <div className="absolute inset-0 bg-white/60 z-0"></div>
-        <h2 className="text-center text-3xl font-bold text-primary z-10 sm:text-5xl">
+        <h1 className="text-center text-3xl font-bold text-primary z-10 sm:text-5xl">
           For Parents
-        </h2>
+        </h1>
       </div>
 
       {/* Term Dates Section */}

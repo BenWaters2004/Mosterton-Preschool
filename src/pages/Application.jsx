@@ -14,9 +14,9 @@ export default function Application() {
       >
         {/* Semi-transparent white overlay */}
         <div className="absolute inset-0 bg-white/60 z-0"></div>
-        <h2 className="text-center text-3xl font-bold text-primary z-10 sm:text-5xl">
+        <h1 className="text-center text-3xl font-bold text-primary z-10 sm:text-5xl">
           Application
-        </h2>
+        </h1>
       </div>
 
       <section className="p-4">

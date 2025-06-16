@@ -48,7 +48,7 @@ export default function StaffMembers() {
       {/* Staff Members Section */}
       <section className="bg-[#481317] pt-12 pb-20 mt-[-30px] z-30 relative">
         <div className="max-w-6xl mx-auto px-4 mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">Meet Our Staff</h2>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">Meet Our Staff</h1>
         </div>
 
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
