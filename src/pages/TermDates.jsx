@@ -53,7 +53,7 @@ export default function TermDates() {
       >
         <div className="absolute inset-0 bg-white/60 z-0"></div>
         <h1 className="text-center text-3xl font-bold text-primary z-10 sm:text-5xl">
-          For Parents
+          Term Dates
         </h1>
       </div>
 
