@@ -110,14 +110,6 @@ export default function FundraisingEvents() {
                 ))}
               </div>
             )}
-            <div className="text-center mt-4">
-              <a
-                href="/fundraisingEvents"
-                className="bg-primary text-white px-12 py-3.5 rounded-full text-lg font-bold hover:bg-[#2E0B0E] transition"
-              >
-                More
-              </a>
-            </div>
           </div>
         </div>
       </section>
