@@ -4,6 +4,15 @@ module.exports = {
   mode: "jit",
   theme: {
     extend: {
+      animation: {
+        crawl: 'crawl 3s ease-in-out infinite',
+      },
+      keyframes: {
+        crawl: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(20px)' },
+        },
+      },
       colors: {
         primary: "#481317",
         secondary: "#5A1A1F",

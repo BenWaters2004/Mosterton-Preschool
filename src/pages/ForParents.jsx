@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import { SchoolReadiness, HeroImage } from "../assets";
+import { SchoolReadiness, HeroImage, SchoolReadinessPDF } from "../assets";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { faFilePdf, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 export default function ForParents() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
       <Nav />
@@ -35,15 +37,36 @@ export default function ForParents() {
           </div>
 
           {/* Image */}
-          <div className="w-full lg:w-1/2">
+          <div className="w-full lg:w-1/2 cursor-pointer">
             <img
               src={SchoolReadiness}
               alt="School Readiness"
+              onClick={() => setIsModalOpen(true)}
               className="rounded-xl shadow-lg object-cover w-full max-h-[400px]"
             />
           </div>
         </div>
       </section>
+
+      {/* Fullscreen Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="absolute top-4 right-4 text-white text-4xl z-10"
+            aria-label="Close"
+          >
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+          <div className="relative max-w-4xl w-full mx-4">
+            <img
+              src={SchoolReadiness}
+              alt="School Readiness Full"
+              className="w-full max-h-[90vh] object-contain rounded-lg"
+            />
+          </div>
+        </div>
+      )}
 
       {/* Bottom Section */}
       <section className="px-6 md:px-12 py-20 bg-gray-50">
@@ -55,7 +78,7 @@ export default function ForParents() {
               Download School Readiness Guide
             </p>
             <a
-              href="/school-readiness.pdf"
+              href={SchoolReadinessPDF}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block bg-[#481317] text-white px-6 py-2 rounded-full hover:bg-[#6a1d23] transition"

@@ -1,0 +1,38 @@
+.react-calendar {
+  background-color: #f4f4f4;
+  border: none;
+  color: #481317;
+  font-family: inherit;
+}
+
+.react-calendar__tile {
+  color: #481317;
+  background: none;
+}
+
+.react-calendar__tile--now {
+  background-color: #ffe4c4;
+  border-radius: 6px;
+}
+
+.react-calendar__tile--active {
+  background-color: #481317;
+  color: white;
+}
+
+.term-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  margin: 4px auto 0;
+}
+
+.highlight-term abbr {
+  position: relative;
+  z-index: 2;
+}
+
+.highlight-term {
+  background-color: rgba(72, 19, 23, 0.1);
+  border-radius: 4px;
+}

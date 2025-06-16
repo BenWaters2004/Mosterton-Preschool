@@ -67,3 +67,9 @@
 .heroBorder {
   border-bottom:#8A3339 solid 28px;
 }
+
+@keyframes crawl {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}

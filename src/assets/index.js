@@ -10,6 +10,9 @@ import Pencils from './Pencils .png'
 import ApplicationToJoinPDF from './Application to join Mosterton Preschool.pdf'
 import gradenLeaves from './gradenLeaves.jpg'
 import SchoolReadiness from './readiness.jpg';
+import SchoolReadinessPDF from './school-readiness.pdf'
+import grass from './grass.png'
+import tree from './tree.png'
 
 export {
   logo,
@@ -24,4 +27,7 @@ export {
   ApplicationToJoinPDF,
   gradenLeaves,
   SchoolReadiness,
+  SchoolReadinessPDF,
+  grass,
+  tree,
 };

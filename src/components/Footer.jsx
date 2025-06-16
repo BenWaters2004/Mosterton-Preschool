@@ -9,7 +9,7 @@ const Footer = () => {
   const [footerRef, footerInView] = useInView({ triggerOnce: true, threshold: 0.2 });
 
   return (
-    <section className="bottom-0 w-full">
+    <section className="bottom-0 w-full overflow-hidden">
       {/* Footer content */}
       <div className="bg-secondary text-white py-12">
         <div

@@ -239,11 +239,11 @@ export default function Home() {
               {events.map((event, index) => (
                 <div
                   key={index}
-                  className="flex items-center border-b border-gray-200 pb-4"
+                  className="flex items-start gap-4 border-b border-gray-200 pb-4"
                 >
                   {/* Date Section */}
-                  <div className="bg-gray-200 rounded-full w-20 h-20 flex flex-col justify-center items-center mr-6">
-                    <p className="text-xl font-bold">{new Date(event.date).getDate()}</p>
+                  <div className="min-w-[80px] h-[80px] bg-gray-200 rounded-full flex flex-col justify-center items-center text-center">
+                    <p className="text-xl font-bold leading-none">{new Date(event.date).getDate()}</p>
                     <p className="text-sm font-medium">
                       {new Date(event.date).toLocaleString("default", { month: "short" })}
                     </p>

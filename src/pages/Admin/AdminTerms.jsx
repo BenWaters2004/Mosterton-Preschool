@@ -1,35 +1,55 @@
 import AdminNavbar from "../../components/AdminNav";
 import AdminFooter from "../../components/AdminFooter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 
 export default function AdminTerms() {
-  const [terms, setTerms] = useState([
-    // Example data; replace with fetched data from the backend
-    { id: 1, startDate: "2024-01-05", endDate: "2024-04-01", name: "Spring Term" },
-    { id: 2, startDate: "2024-04-15", endDate: "2024-07-20", name: "Summer Term" },
-  ]);
+  const [terms, setTerms] = useState([]);
+  const [newTerm, setNewTerm] = useState({ name: "", startDate: "", endDate: "", color: "#FECF00" });
+  const navigate = useNavigate();
 
-  const [newTerm, setNewTerm] = useState({ name: "", startDate: "", endDate: "" });
+  useEffect(() => {
+    const db = getDatabase();
+    const termsRef = ref(db, "terms");
 
-  // Handlers
+    onValue(termsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const termList = Object.entries(data).map(([id, val]) => ({
+          id,
+          ...val,
+        }));
+        setTerms(termList);
+      } else {
+        setTerms([]);
+      }
+    });
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewTerm({ ...newTerm, [name]: value });
   };
 
   const handleAddTerm = () => {
-    if (!newTerm.name || !newTerm.startDate || !newTerm.endDate) {
+    if (!newTerm.name || !newTerm.startDate || !newTerm.endDate || !newTerm.color) {
       alert("Please fill in all fields!");
       return;
     }
 
-    const newId = terms.length > 0 ? terms[terms.length - 1].id + 1 : 1;
-    setTerms([...terms, { id: newId, ...newTerm }]);
-    setNewTerm({ name: "", startDate: "", endDate: "" });
+    const db = getDatabase();
+    const termsRef = ref(db, "terms");
+    push(termsRef, newTerm);
+
+    setNewTerm({ name: "", startDate: "", endDate: "", color: "#FECF00" });
   };
 
+
   const handleDeleteTerm = (id) => {
-    setTerms(terms.filter((term) => term.id !== id));
+    const db = getDatabase();
+    const termRef = ref(db, `terms/${id}`);
+    remove(termRef);
   };
 
   return (
@@ -37,7 +57,15 @@ export default function AdminTerms() {
       <AdminNavbar />
       <div className="min-h-screen bg-gray-100 py-10 px-6">
         <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
-          <h1 className="text-2xl font-bold mb-6">Manage Term Dates</h1>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold">Manage Term Dates</h1>
+            <button
+              onClick={() => navigate("/AdminDashboard")}
+              className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+            >
+              Back to Dashboard
+            </button>
+          </div>
 
           {/* Existing Terms */}
           <table className="w-full border-collapse border border-gray-300">
@@ -71,7 +99,7 @@ export default function AdminTerms() {
           {/* Add New Term */}
           <div className="mt-8">
             <h2 className="text-xl font-bold mb-4">Add New Term</h2>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-4 gap-4">
               <input
                 type="text"
                 name="name"
@@ -93,6 +121,13 @@ export default function AdminTerms() {
                 value={newTerm.endDate}
                 onChange={handleInputChange}
                 className="p-2 border border-gray-300 rounded"
+              />
+              <input
+                type="color"
+                name="color"
+                value={newTerm.color}
+                onChange={handleInputChange}
+                className="w-full h-full rounded border border-gray-300"
               />
             </div>
             <button
